@@ -103,10 +103,10 @@ jobs:
           . venv/bin/activate
           paig-server run
     
-        - name: Install Cypress Dependencies
-          run: |
-            cd paig-oss-automation
-            npm install
+    - name: Install Cypress Dependencies
+      run: |
+        cd paig-oss-automation
+        npm install
 
     - name: Run Cypress Tests
       uses: cypress-io/github-action@v6
