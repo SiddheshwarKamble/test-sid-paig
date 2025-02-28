@@ -101,7 +101,7 @@ jobs:
     - name: Run Paig Server
       run: |
           . venv/bin/activate
-          paig-server run
+          paig-server run --background true
     
     - name: Install Cypress Dependencies
       run: |
