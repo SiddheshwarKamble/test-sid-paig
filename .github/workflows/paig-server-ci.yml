@@ -43,38 +43,6 @@ jobs:
         . venv/bin/activate
         pip install twine build pytest pytest-cov
 
-    - name: Build and Install paig-common wheel
-      run: |
-        . venv/bin/activate
-        cd paig-common
-        python3 -m build -w
-        pip install dist/*.whl
-        cd ..
-
-    - name: Build and Install paig-authorizer-core wheel
-      run: |
-        . venv/bin/activate
-        cd paig-authorizer-core
-        python3 -m build -w
-        pip install dist/*.whl
-        cd ..
-
-    - name: Build and Install paig-evaluation wheel
-      run: |
-        . venv/bin/activate
-        cd paig-evaluation
-        python3 -m build -w
-        pip install dist/*.whl
-        cd ..
-
-    - name: Build and Install paig-evaluation wheel
-      run: |
-        . venv/bin/activate
-        cd paig-evaluation
-        python3 -m build -w
-        pip install dist/*.whl
-        cd ..
-
     - name: Install PAIG-Server dependencies
       run: |
         . venv/bin/activate
@@ -135,10 +103,10 @@ jobs:
           . venv/bin/activate
           paig-server run
     
-        - name: Install Cypress Dependencies
-          run: |
-            cd paig-oss-automation
-            npm install
+    - name: Install Cypress Dependencies
+      run: |
+        cd paig-oss-automation
+        npm install
 
     - name: Run Cypress Tests
       uses: cypress-io/github-action@v6
