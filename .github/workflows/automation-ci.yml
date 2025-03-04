@@ -10,6 +10,9 @@ on:
     paths:
       - 'paig-server/**'
   workflow_dispatch: # Allows manual trigger
+  schedule:
+    - cron: '30 2 * * *'  # Runs every day at 8 AM IST (2:30 AM UTC)
+    - cron: '50 8 * * *'
 
 permissions:
   contents: read
@@ -80,6 +83,20 @@ jobs:
         browser: chrome
         headless: true
 
+<<<<<<< HEAD
+=======
+    - name: Generate Cypress Report
+      run: |
+        cd paig-oss-automation
+        npm run generate:report
+
+    - name: Upload Cypress Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: cypress-report
+        path: paig-oss-automation/cypress/reports
+
+>>>>>>> 24eb7ae (Added workflow and updated tests)
     - name: Upload Cypress Screenshots
       uses: actions/upload-artifact@v4
       with:
@@ -90,8 +107,11 @@ jobs:
       run: |
           . venv/bin/activate
           paig-server stop
+<<<<<<< HEAD
 
     - name: Stop Paig Server
       run: |
           . venv/bin/activate
           paig-server stop
+=======
+>>>>>>> 24eb7ae (Added workflow and updated tests)
