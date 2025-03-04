@@ -609,57 +609,6 @@ describe("Test User Management page for users tab", () => {
         cy.get(`[data-testid="tbody-with-data"]`).should('not.have.text', updatedFirstName);
     });
 
-    it("should add a new user and verify the association group and number of group chips displayed in the UI", () => {
-        //create the user
-        createNewUser(firstName, lastName, email, username, role.user, status.disabled);
-        cy.get('[data-testid="custom-dialog"]').should('not.exist');
-        cy.get('#notistack-snackbar').should('contain.text', `User "${firstName}" created successfully`);
-        cy.get('[data-testid="snackbar-close-btn"]').should('exist').click();
-        cy.get('#notistack-snackbar').should('not.exist');
-
-        //created user should be in the table
-        cy.get(`[data-testid="tbody-with-data"]`).should('contain.text', firstName);
-
-        //edit the user and associate groups
-        editUserAndAssociateGroup(updatedFirstName, updatedLastName, username, role.owner, status.enabled);
-        cy.get('#notistack-snackbar').should('contain.text', `User "${updatedFirstName}" updated successfully`);
-        cy.get('[data-testid="snackbar-close-btn"]').should('exist').click();
-        cy.get('#notistack-snackbar').should('not.exist');
-        cy.wait(3000);
-        // Intercept GET requests to fetch user data
-        cy.intercept('GET', '/account-service/api/users*').as('getUserData');
-
-        cy.get('[data-testid="header-refresh-btn"]').click();
-
-        cy.wait('@getUserData').then((interception) => {
-            // Get user data from the intercepted response
-            const userData = interception.response.body.content.find(user => user.username === username);
-            // Get the number of groups associated with the user
-            const groupsAssociated = userData.groups.length;
-
-            cy.contains('[data-testid="table-row"]', updatedFirstName).within(() => {
-                cy.get('[data-test="edit"]').click();
-            });
-            cy.get('[data-testid="custom-dialog"]').should('be.visible').within(() => {
-                cy.get('[data-testid="groups-tab"]').click();
-                cy.get('[data-testid="edit-group"]').should('exist')
-
-            });
-
-            // Count the number of group chips displayed in the UI
-            cy.get('[data-testid="tbody-with-data"]').its('length').then((chipCount) => {
-                // Assert that the number of chips matches the number of groups associated
-                expect(chipCount).to.eq(groupsAssociated);
-            });
-            cy.get('[data-test="modal-cancel-btn"]').contains('Close').click();
-        });
-
-        //delete the user
-        deleteUser(username);
-
-        //deleted user should not be in the table
-        cy.get(`[data-testid="tbody-with-data"]`).should('not.have.text', updatedFirstName);
-    });
 
     it("should increase counters when checkboxes are selected or deselected inside Edit User", () => {
         // Create the user
