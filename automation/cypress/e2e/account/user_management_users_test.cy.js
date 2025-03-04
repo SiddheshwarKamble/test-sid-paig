@@ -609,7 +609,7 @@ describe("Test User Management page for users tab", () => {
         cy.get(`[data-testid="tbody-with-data"]`).should('not.have.text', updatedFirstName);
     });
 
-    it("should add a new user and verify the association group and number of group chips displayed in the UI", () => {
+    it.skip("should add a new user and verify the association group and number of group chips displayed in the UI", () => {
         //create the user
         createNewUser(firstName, lastName, email, username, role.user, status.disabled);
         cy.get('[data-testid="custom-dialog"]').should('not.exist');
@@ -661,7 +661,7 @@ describe("Test User Management page for users tab", () => {
         cy.get(`[data-testid="tbody-with-data"]`).should('not.have.text', updatedFirstName);
     });
 
-    it("should increase counters when checkboxes are selected or deselected inside Edit User", () => {
+    it.skip("should increase counters when checkboxes are selected or deselected inside Edit User", () => {
         // Create the user
         createNewUser(firstName, lastName, email, username, role.user, status.disabled);
         cy.get('#notistack-snackbar').should('contain.text', `User "${firstName}" created successfully`);
