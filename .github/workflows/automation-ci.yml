@@ -12,7 +12,7 @@ on:
   workflow_dispatch: # Allows manual trigger
   schedule:
     - cron: '30 2 * * *'  # Runs every day at 8 AM IST (2:30 AM UTC)
-    - cron: '50 8 * * *'
+    - cron: '30 9 * * *'  # Runs every day at 3:00 PM IST (9:30 AM UTC)
 
 permissions:
   contents: read
@@ -92,13 +92,20 @@ jobs:
         cd paig-oss-automation
         npm run generate:report
 
-    - name: Upload Cypress Report
+    - name: Upload Cypress Report Files
       uses: actions/upload-artifact@v4
       with:
-        name: cypress-report
-        path: paig-oss-automation/cypress/reports
+        name: cypress-html-report
+        path: paig-oss-automation/cypress/reports/report.html
 
-    - name: Upload Cypress Screenshots
+    - name: Upload Cypress JSON Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: cypress-json-report
+        path: paig-oss-automation/cypress/reports/report.json
+
+    - name: Upload Cypress Screenshots on Failure
+      if: failure()
       uses: actions/upload-artifact@v4
       with:
         name: cypress-screenshots
