@@ -59,25 +59,25 @@ jobs:
 
     - name: Install created package
       run: |
-          rm -rf venv
-          virtualenv -p python3 venv && . venv/bin/activate
-          cd paig-server
-          pip install dist/*.whl
+        rm -rf venv
+        virtualenv -p python3 venv && . venv/bin/activate
+        cd paig-server
+        pip install dist/*.whl
 
     - name: Run Paig Server
       run: |
-          . venv/bin/activate
-          paig-server run --background true
+        . venv/bin/activate
+        paig-server run --background true
 
     - name: Install Cypress Dependencies
       run: |
-        cd automation
+        cd paig-server/automation
         npm install
 
     - name: Run Cypress Tests
       uses: cypress-io/github-action@v6
       with:
-        working-directory: automation
+        working-directory: paig-server/automation
         start: npx cypress run
         wait-on: http://localhost:4545
         browser: chrome
@@ -86,25 +86,25 @@ jobs:
     - name: Generate Cypress Report
       if: always()
       run: |
-        cd automation
+        cd paig-server/automation
         npm run generate:report
 
-    - name: Upload Cypress JSON Report
+    - name: Upload Cypress Report
       if: always()
       uses: actions/upload-artifact@v4
       with:
         name: cypress-report
-        path: automation/cypress/reports/
+        path: paig-server/automation/cypress/reports/
 
     - name: Upload Cypress Screenshots on Failure
       if: failure()
       uses: actions/upload-artifact@v4
       with:
         name: cypress-screenshots
-        path: automation/cypress/screenshots
+        path: paig-server/automation/cypress/screenshots
 
     - name: Stop Paig Server
       if: always()
       run: |
-          . venv/bin/activate
-          paig-server stop
+        . venv/bin/activate
+        paig-server stop
