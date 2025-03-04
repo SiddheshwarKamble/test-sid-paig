@@ -217,7 +217,7 @@ describe("Test User Management page for users tab", () => {
             cy.get('[data-testid="groups-tab"]').click();
         });
 
-        cy.wait(2000);
+        cy.wait(3000);
         cy.get('[data-testid="tbody-with-data"] input[type="checkbox"]').each(($checkbox, index) => {
             if (Math.random() > 0.5) {
                 cy.wrap($checkbox).click();
