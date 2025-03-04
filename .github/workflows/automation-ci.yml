@@ -13,7 +13,6 @@ on:
   schedule:
     - cron: '30 2 * * *'  # Runs every day at 8 AM IST (2:30 AM UTC)
     - cron: '30 11 * * *'  # Runs every day at 5:00 PM IST (11:30 AM UTC)
-    - cron: '*/15 * * * *' # Runs every 15 minutes  remove  this after test
 
 permissions:
   contents: read
