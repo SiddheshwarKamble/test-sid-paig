@@ -117,13 +117,16 @@ jobs:
         browser: chrome
         headless: true
 
-    - name: Upload Cypress Screenshots (on failure)
-      if: failure()
+    - name: Upload Cypress Screenshots
       uses: actions/upload-artifact@v4
       with:
         name: cypress-screenshots
         path: paig-oss-automation/cypress/screenshots
-        retention-days: 7
+
+    - name: Stop Paig Server
+      run: |
+          . venv/bin/activate
+          paig-server stop
 
     - name: Stop Paig Server
       run: |

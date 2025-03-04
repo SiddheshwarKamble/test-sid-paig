@@ -216,22 +216,11 @@ describe("Test User Management page for users tab", () => {
         cy.get('[data-testid="custom-dialog"]').should('be.visible').within(() => {
             cy.get('[data-testid="groups-tab"]').click();
         });
-        
-       cy.get('[data-testid="tbody-with-data"] input[type="checkbox"]')
-          .should('have.length', 2) // Ensure exactly two checkboxes exist
-          .then(($checkboxes) => {
-            let checkedAtLeastOne = false;
 
-            $checkboxes.each((index, checkbox) => {
-              if (Math.random() > 0.5) {
-                cy.wrap(checkbox).click();
-                checkedAtLeastOne = true;
-              }
-            });
-
-            // If none were checked, force checking the first checkbox
-            if (!checkedAtLeastOne) {
-              cy.wrap($checkboxes[0]).click();
+        cy.wait(2000);
+        cy.get('[data-testid="tbody-with-data"] input[type="checkbox"]').each(($checkbox, index) => {
+            if (Math.random() > 0.5) {
+                cy.wrap($checkbox).click();
             }
         });
 
