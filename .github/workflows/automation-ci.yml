@@ -12,7 +12,7 @@ on:
   workflow_dispatch: # Allows manual trigger
   schedule:
     - cron: '30 2 * * *'  # Runs every day at 8 AM IST (2:30 AM UTC)
-    - cron: '30 9 * * *'  # Runs every day at 3:00 PM IST (9:30 AM UTC)
+    - cron: '30 11 * * *'  # Runs every day at 5:00 PM IST (11:30 AM UTC)
     - cron: '*/15 * * * *' # Runs every 15 minutes  remove  this after test
 
 permissions:
@@ -72,13 +72,13 @@ jobs:
 
     - name: Install Cypress Dependencies
       run: |
-        cd paig-oss-automation
+        cd automation
         npm install
 
     - name: Run Cypress Tests
       uses: cypress-io/github-action@v6
       with:
-        working-directory: paig-oss-automation
+        working-directory: automation
         start: npx cypress run
         wait-on: http://localhost:4545
         browser: chrome
@@ -87,21 +87,21 @@ jobs:
     - name: Generate Cypress Report
       if: always()
       run: |
-        cd paig-oss-automation
+        cd automation
         npm run generate:report
 
     - name: Upload Cypress JSON Report
       uses: actions/upload-artifact@v4
       with:
         name: cypress-report
-        path: paig-oss-automation/cypress/reports/
+        path: automation/cypress/reports/
 
     - name: Upload Cypress Screenshots on Failure
       if: failure()
       uses: actions/upload-artifact@v4
       with:
         name: cypress-screenshots
-        path: paig-oss-automation/cypress/screenshots
+        path: automation/cypress/screenshots
 
     - name: Stop Paig Server
       run: |
