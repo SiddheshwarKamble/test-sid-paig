@@ -83,12 +83,9 @@ jobs:
         wait-on: http://localhost:4545
         browser: chrome
         headless: true
-    - name: Generate Cypress Report
-      run: |
-        cd paig-oss-automation
-        npm run generate:report
 
     - name: Generate Cypress Report
+      if: always()
       run: |
         cd paig-oss-automation
         npm run generate:report
