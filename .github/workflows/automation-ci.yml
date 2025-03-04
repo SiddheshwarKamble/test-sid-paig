@@ -91,6 +91,7 @@ jobs:
         npm run generate:report
 
     - name: Upload Cypress JSON Report
+      if: always()
       uses: actions/upload-artifact@v4
       with:
         name: cypress-report
@@ -104,6 +105,7 @@ jobs:
         path: automation/cypress/screenshots
 
     - name: Stop Paig Server
+      if: always()
       run: |
           . venv/bin/activate
           paig-server stop
